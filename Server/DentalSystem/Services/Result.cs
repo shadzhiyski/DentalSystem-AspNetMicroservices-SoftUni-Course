@@ -1,4 +1,4 @@
-﻿namespace CarRentalSystem.Services
+﻿namespace DentalSystem.Services
 {
     using System;
     using System.Collections.Generic;
