@@ -1,6 +1,10 @@
 namespace DentalSystem.Identity
 {
+    using DentalSystem.Identity.Data;
+    using DentalSystem.Identity.Infrastructure;
+    using DentalSystem.Identity.Services.Identity;
     using DentalSystem.Infrastructure;
+    using DentalSystem.Services.Data;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -19,6 +23,16 @@ namespace DentalSystem.Identity
 
         public void ConfigureServices(IServiceCollection services)
             => services
+                .Configure<IdentitySettings>(
+                    this.Configuration.GetSection(nameof(IdentitySettings)),
+                    config => config.BindNonPublicProperties = true)
+                .AddWebService<IdentityDbContext>(
+                    this.Configuration,
+                    messagingHealthChecks: false)
+                .AddUserStorage()
+                .AddTransient<IDataSeeder, IdentityDataSeeder>()
+                .AddTransient<IIdentityService, IdentityService>()
+                .AddTransient<ITokenGeneratorService, TokenGeneratorService>()
                 .AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "DentalSystem.Identity", Version = "v1" });
@@ -32,6 +46,7 @@ namespace DentalSystem.Identity
                         .UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DentalSystem.Identity v1"))
                     : app
                 )
-                .UseWebService(env);
+                .UseWebService(env)
+                .Initialize();
     }
 }
