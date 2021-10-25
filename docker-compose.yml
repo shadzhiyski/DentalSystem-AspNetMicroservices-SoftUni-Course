@@ -35,6 +35,23 @@ services:
         depends_on:
             - data
 
+    watchdog:
+        container_name: watchdog
+        image: stoian/dentalsystem-watchdog-service
+        build:
+            context: ./Server
+            dockerfile: ./DentalSystem.Watchdog/Dockerfile
+        ports:
+            - "5500:80"
+        environment:
+            - HealthChecks-UI__HealthChecks__0__Name=Identity
+            - HealthChecks-UI__HealthChecks__0__Uri=http://identity/health
+        restart: on-failure
+        networks:
+            - dentalsystem-network
+        depends_on:
+            - identity
+
 networks:
     dentalsystem-network:
 
