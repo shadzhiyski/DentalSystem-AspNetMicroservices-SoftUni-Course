@@ -15,8 +15,29 @@ services:
         networks:
             - dentalsystem-network
 
+    identity:
+        container_name: identity
+        image: stoian/dentalsystem-identity-service
+        build:
+            context: ./Server
+            dockerfile: ./DentalSystem.Identity/Dockerfile
+        ports:
+            - "5001:80"
+        env_file: Server/DentalSystem/Common.env
+        environment:
+            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DentalSystem_IdentityDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
+            - IdentitySettings__AdminPassword=adminpass12!
+        restart: on-failure
+        volumes:
+            - data-protection:/root/.aspnet/DataProtection-Keys
+        networks:
+            - dentalsystem-network
+        depends_on:
+            - data
+
 networks:
     dentalsystem-network:
 
 volumes:
     sqldata:
+    data-protection:
