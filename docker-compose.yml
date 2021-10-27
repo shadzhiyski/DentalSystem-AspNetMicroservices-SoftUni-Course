@@ -15,6 +15,20 @@ services:
         networks:
             - dentalsystem-network
 
+    messages:
+        container_name: rabbitmq
+        image: rabbitmq:3-management
+        ports:
+            - "5672:5672"
+        hostname: "rabbitmq"
+        environment:
+            - RABBITMQ_DEFAULT_USER=rabbitmquser
+            - RABBITMQ_DEFAULT_PASS=rabbitmqPassword12!
+        volumes:
+            - rabbitmq:/var/lib/rabbitmq/mnesia
+        networks:
+            - dentalsystem-network
+
     identity:
         container_name: identity
         image: stoian/dentalsystem-identity-service
@@ -57,4 +71,5 @@ networks:
 
 volumes:
     sqldata:
+    rabbitmq:
     data-protection:
