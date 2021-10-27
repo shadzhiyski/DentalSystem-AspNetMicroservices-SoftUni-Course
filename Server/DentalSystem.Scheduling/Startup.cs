@@ -1,5 +1,7 @@
 namespace DentalSystem.Scheduling
 {
+    using DentalSystem.Infrastructure;
+    using Data;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -16,11 +18,11 @@ namespace DentalSystem.Scheduling
 
         public void ConfigureServices(IServiceCollection services)
             => services
+                .AddWebService<SchedulingDbContext>(this.Configuration)
                 .AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "DentalSystem.Scheduling", Version = "v1" });
-                })
-                .AddControllers();
+                });
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             => (env.IsDevelopment()
@@ -30,12 +32,7 @@ namespace DentalSystem.Scheduling
                         .UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DentalSystem.Scheduling v1"))
                     : app
                 )
-                .UseHttpsRedirection()
-                .UseRouting()
-                .UseAuthorization()
-                .UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllers();
-                });
+                .UseWebService(env)
+                .Initialize();
     }
 }
