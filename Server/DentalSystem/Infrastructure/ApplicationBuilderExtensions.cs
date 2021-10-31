@@ -1,6 +1,7 @@
 ﻿namespace DentalSystem.Infrastructure
 {
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Diagnostics.HealthChecks;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
@@ -26,8 +27,10 @@
                     .AllowAnyMethod())
                 .UseAuthentication()
                 .UseAuthorization()
-                .UseEndpoints(endpoints => endpoints
-                    .MapControllers());
+                .UseEndpoints(endpoints =>
+                    endpoints
+                        .MapHealthChecks()
+                        .MapControllers());
 
             return app;
         }
