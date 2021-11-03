@@ -1,14 +1,11 @@
 namespace DentalSystem.Scheduling.Data.Models
 {
     using System;
+    using DentalSystem.Data.Models;
     using DentalSystem.Scheduling.Data.ValueObjects;
 
-    public class TreatmentSession
+    public class TreatmentSession : PublicEntity
     {
-        public Guid Id { get; set; }
-
-        public Guid ReferenceId { get; set; }
-
         public Guid PatientId { get; set; }
 
         public virtual Patient Patient { get; set; }
