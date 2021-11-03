@@ -1,5 +1,6 @@
 ﻿namespace DentalSystem.Services.Data
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using DentalSystem.Data;
@@ -8,7 +9,7 @@
     using Microsoft.EntityFrameworkCore;
 
     public abstract class DataService<TEntity> : IDataService<TEntity>
-        where TEntity : class
+        where TEntity : PublicEntity
     {
         protected DataService(DbContext data, IPublisher publisher)
         {
@@ -51,6 +52,11 @@
                     await this.Data.SaveChangesAsync();
                 }
             }
+        }
+
+        public async Task<TEntity> FindByReferenceId(Guid referenceId)
+        {
+            return await this.Data.Set<TEntity>().FirstOrDefaultAsync(e => e.ReferenceId == referenceId);
         }
     }
 }
