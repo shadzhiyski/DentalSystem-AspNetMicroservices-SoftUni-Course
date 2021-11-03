@@ -7,26 +7,27 @@ namespace DentalSystem.Scheduling.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<Guid>(
+            migrationBuilder.DropPrimaryKey(name: "PK_Messages", table: "Messages");
+            migrationBuilder.DropColumn(name: "Id", table: "Messages");
+            migrationBuilder.AddColumn<Guid>(
                 name: "Id",
                 table: "Messages",
                 type: "uniqueidentifier",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int")
-                .OldAnnotation("SqlServer:Identity", "1, 1");
+                nullable: false);
+            migrationBuilder.AddPrimaryKey(name: "PK_Messages", table: "Messages", "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<int>(
+            migrationBuilder.DropPrimaryKey(name: "PK_Messages", table: "Messages");
+            migrationBuilder.DropColumn(name: "Id", table: "Messages");
+            migrationBuilder.AddColumn<int>(
                 name: "Id",
                 table: "Messages",
                 type: "int",
-                nullable: false,
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier")
+                nullable: false)
                 .Annotation("SqlServer:Identity", "1, 1");
+            migrationBuilder.AddPrimaryKey(name: "PK_Messages", table: "Messages", "Id");
         }
     }
 }
