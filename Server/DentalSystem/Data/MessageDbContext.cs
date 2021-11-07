@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Models;
 
-    public abstract class MessageDbContext : DbContext
+    public abstract class MessageDbContext : DbContext, IMessageDbContext
     {
         protected MessageDbContext(DbContextOptions options)
             : base(options)

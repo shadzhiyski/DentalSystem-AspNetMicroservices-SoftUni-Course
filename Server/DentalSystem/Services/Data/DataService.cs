@@ -31,7 +31,7 @@
             var dataMessages = messages
                 .ToDictionary(data => data, data => new Message(data));
 
-            if (this.Data is MessageDbContext)
+            if (this.Data is IMessageDbContext)
             {
                 foreach (var (_, message) in dataMessages)
                 {
@@ -41,7 +41,7 @@
 
             await this.Data.SaveChangesAsync();
 
-            if (this.Data is MessageDbContext)
+            if (this.Data is IMessageDbContext)
             {
                 foreach (var (data, message) in dataMessages)
                 {
