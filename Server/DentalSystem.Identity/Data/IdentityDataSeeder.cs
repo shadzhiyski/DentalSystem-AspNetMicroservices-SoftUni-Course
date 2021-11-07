@@ -66,8 +66,8 @@
                         var defaultUser = new User
                         {
                             Id = DataSeederConstants.DefaultUserId,
-                            UserName = "coolcars@crs.com",
-                            Email = "coolcars@crs.com"
+                            UserName = "dentalcare@dcs.com",
+                            Email = "dentalcare@dcs.com"
                         };
 
                         await this.userManager.CreateAsync(defaultUser, DataSeederConstants.DefaultUserPassword);
