@@ -40,8 +40,8 @@
 
                         var adminUser = new User
                         {
-                            UserName = "admin@crs.com",
-                            Email = "admin@crs.com",
+                            UserName = "admin@dcs.com",
+                            Email = "admin@dcs.com",
                             SecurityStamp = "RandomSecurityStamp"
                         };
 
