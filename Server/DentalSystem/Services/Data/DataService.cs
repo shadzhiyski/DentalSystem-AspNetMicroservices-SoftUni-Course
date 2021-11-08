@@ -29,30 +29,7 @@
 
         public async Task Save(params object[] messages)
         {
-            var dataMessages = messages
-                .ToDictionary(data => data, data => new Message(data));
-
-            if (this.Data is IMessageDbContext)
-            {
-                foreach (var (_, message) in dataMessages)
-                {
-                    this.Data.Add(message);
-                }
-            }
-
-            await this.Data.SaveChangesAsync();
-
-            if (this.Data is IMessageDbContext)
-            {
-                foreach (var (data, message) in dataMessages)
-                {
-                    await this.Publisher.Publish(data);
-
-                    message.MarkAsPublished();
-
-                    await this.Data.SaveChangesAsync();
-                }
-            }
+            await this.UnitOfWork.Save(messages);
         }
 
         public async Task<TEntity> FindByReferenceId(Guid referenceId)
