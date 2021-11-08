@@ -18,6 +18,7 @@
     using Microsoft.IdentityModel.Tokens;
     using Models;
     using Services.Identity;
+    using DentalSystem.Services.Data;
 
     public static class ServiceCollectionExtensions
     {
@@ -45,6 +46,7 @@
             where TDbContext : DbContext
             => services
                 .AddScoped<DbContext, TDbContext>()
+                .AddScoped<IUnitOfWork, UnitOfWork>()
                 .AddDbContext<TDbContext>(options => options
                     .UseSqlServer(
                         configuration.GetDefaultConnectionString(),

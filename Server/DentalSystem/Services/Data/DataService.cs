@@ -11,15 +11,16 @@
     public abstract class DataService<TEntity> : IDataService<TEntity>
         where TEntity : PublicEntity
     {
-        protected DataService(DbContext data, IPublisher publisher)
+        protected DataService(IUnitOfWork unitOfWork)
         {
-            this.Data = data;
-            this.Publisher = publisher;
+            this.UnitOfWork = unitOfWork;
         }
 
-        protected DbContext Data { get; }
+        public DbContext Data => this.UnitOfWork.Data;
 
-        protected IPublisher Publisher { get; }
+        public IPublisher Publisher => this.UnitOfWork.Publisher;
+
+        public IUnitOfWork UnitOfWork { get; }
 
         protected IQueryable<TEntity> All() => this.Data.Set<TEntity>();
 

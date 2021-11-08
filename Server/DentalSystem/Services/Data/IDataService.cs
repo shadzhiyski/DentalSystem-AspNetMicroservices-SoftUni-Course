@@ -3,12 +3,10 @@
     using System;
     using System.Threading.Tasks;
 
-    public interface IDataService<TEntity>
+    public interface IDataService<TEntity> : IUnitOfWork
         where TEntity : class
     {
         void Add(TEntity entity);
-
-        Task Save(params object[] messages);
 
         Task<TEntity> FindByReferenceId(Guid referenceId);
     }
