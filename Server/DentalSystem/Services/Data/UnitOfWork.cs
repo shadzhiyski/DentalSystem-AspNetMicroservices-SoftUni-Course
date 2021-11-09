@@ -9,7 +9,7 @@ namespace DentalSystem.Services.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        protected UnitOfWork(DbContext data, IPublisher publisher)
+        public UnitOfWork(DbContext data, IPublisher publisher)
         {
             this.Data = data;
             this.Publisher = publisher;
