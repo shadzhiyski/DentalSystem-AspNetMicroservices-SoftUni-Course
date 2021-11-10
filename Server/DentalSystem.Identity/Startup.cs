@@ -33,6 +33,7 @@ namespace DentalSystem.Identity
                 .AddTransient<IDataSeeder, IdentityDataSeeder>()
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<ITokenGeneratorService, TokenGeneratorService>()
+                .AddMessaging(this.Configuration)
                 .AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "DentalSystem.Identity", Version = "v1" });
