@@ -3,6 +3,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using DentalSystem.Data;
+    using DentalSystem.Messages.Identity;
     using DentalSystem.Services.Data;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Options;
@@ -10,17 +11,20 @@
 
     public class IdentityDataSeeder : IDataSeeder
     {
+        private readonly IUnitOfWork unitOfWork;
         private readonly UserManager<User> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ApplicationSettings applicationSettings;
         private readonly IdentitySettings identitySettings;
 
         public IdentityDataSeeder(
-            UserManager<User> userManager, 
+            IUnitOfWork unitOfWork,
+            UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
             IOptions<ApplicationSettings> applicationSettings,
             IOptions<IdentitySettings> identitySettings)
         {
+            this.unitOfWork = unitOfWork;
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.applicationSettings = applicationSettings.Value;
@@ -48,6 +52,12 @@
                         await this.userManager.CreateAsync(adminUser, this.identitySettings.AdminPassword);
 
                         await this.userManager.AddToRoleAsync(adminUser, Constants.AdministratorRoleName);
+
+                        var dentistRole = new IdentityRole(Constants.DentistRoleName);
+                        await this.roleManager.CreateAsync(dentistRole);
+
+                        var patientRole = new IdentityRole(Constants.PatientRoleName);
+                        await this.roleManager.CreateAsync(patientRole);
                     })
                     .GetAwaiter()
                     .GetResult();
@@ -58,19 +68,29 @@
                 Task
                     .Run(async () =>
                     {
-                        if (await this.userManager.FindByIdAsync(DataSeederConstants.DefaultUserId) != null)
+                        if (await this.userManager.FindByIdAsync(DataSeederConstants.DefaultDentistUserId) != null)
                         {
                             return;
                         }
 
-                        var defaultUser = new User
+                        var dentistUser = new User
                         {
-                            Id = DataSeederConstants.DefaultUserId,
-                            UserName = "dentalcare@dcs.com",
-                            Email = "dentalcare@dcs.com"
+                            Id = DataSeederConstants.DefaultDentistUserId,
+                            UserName = "dentalcare_dentist@dcs.com",
+                            Email = "dentalcare_dentist@dcs.com"
                         };
 
-                        await this.userManager.CreateAsync(defaultUser, DataSeederConstants.DefaultUserPassword);
+                        await this.userManager.CreateAsync(dentistUser, DataSeederConstants.DefaultDentistUserPassword);
+
+                        await this.userManager.AddToRoleAsync(dentistUser, Constants.DentistRoleName);
+
+                        var dentistRegisteredMessage = new DentistRegisteredMessage
+                        {
+                            DentalTeamName = Constants.DefaultDentalTeamName,
+                            ReferenceId = dentistUser.Id,
+                        };
+
+                        await unitOfWork.Save(dentistRegisteredMessage);
                     })
                     .GetAwaiter()
                     .GetResult();
