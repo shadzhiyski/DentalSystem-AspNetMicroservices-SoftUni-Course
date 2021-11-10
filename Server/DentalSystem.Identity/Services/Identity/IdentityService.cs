@@ -6,23 +6,27 @@
     using Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Models.Identity;
+    using DentalSystem.Services.Data;
+    using DentalSystem.Messages.Identity;
 
     public class IdentityService : IIdentityService
     {
         private const string InvalidErrorMessage = "Invalid credentials.";
-
+        private readonly IUnitOfWork unitOfWork;
         private readonly UserManager<User> userManager;
         private readonly ITokenGeneratorService jwtTokenGenerator;
 
         public IdentityService(
-            UserManager<User> userManager, 
+            IUnitOfWork unitOfWork,
+            UserManager<User> userManager,
             ITokenGeneratorService jwtTokenGenerator)
         {
+            this.unitOfWork = unitOfWork;
             this.userManager = userManager;
             this.jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async Task<Result<User>> Register(UserInputModel userInput)
+        public async Task<Result<User>> Register(UserInputModel userInput, string roleName = Constants.PatientRoleName)
         {
             var user = new User
             {
@@ -31,8 +35,32 @@
             };
 
             var identityResult = await this.userManager.CreateAsync(user, userInput.Password);
+            var roleLinkIdentityResult = await this.userManager.AddToRoleAsync(user, roleName);
 
             var errors = identityResult.Errors.Select(e => e.Description);
+
+            if (identityResult.Succeeded
+                && roleLinkIdentityResult.Succeeded
+                && Constants.PatientRoleName.Equals(roleName))
+            {
+                object message = default;
+                if (Constants.PatientRoleName.Equals(roleName))
+                {
+                    message = new PatientRegisteredMessage
+                    {
+                        ReferenceId = user.Id
+                    };
+                }
+                else if (Constants.PatientRoleName.Equals(roleName))
+                {
+                    message = new DentistRegisteredMessage
+                    {
+                        ReferenceId = user.Id
+                    };
+                }
+
+                await unitOfWork.Save(message);
+            }
 
             return identityResult.Succeeded
                 ? Result<User>.SuccessWith(user)

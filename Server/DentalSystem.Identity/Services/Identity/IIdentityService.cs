@@ -7,7 +7,7 @@
 
     public interface IIdentityService
     {
-        Task<Result<User>> Register(UserInputModel userInput);
+        Task<Result<User>> Register(UserInputModel userInput, string roleName = Constants.PatientRoleName);
 
         Task<Result<UserOutputModel>> Login(UserInputModel userInput);
 
