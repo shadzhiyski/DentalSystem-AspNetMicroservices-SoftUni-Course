@@ -10,6 +10,8 @@ namespace DentalSystem.Scheduling
     using Microsoft.OpenApi.Models;
     using DentalSystem.Scheduling.Services;
     using DentalSystem.Notifications.Messages;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using System.Collections.Generic;
 
     public class Startup
     {
@@ -32,6 +34,36 @@ namespace DentalSystem.Scheduling
                     typeof(DentistRegisteredConsumer), typeof(PatientRegisteredConsumer))
                 .AddSwaggerGen(c =>
                 {
+                    c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+                    {
+                        Description = "JWT Authorization header using the Bearer scheme.",
+                        Name = "JWT Authorization",
+                        In = ParameterLocation.Header,
+                        Scheme = "bearer",
+                        Type = SecuritySchemeType.Http,
+                        BearerFormat = "JWT",
+                        Reference = new OpenApiReference
+                        {
+                            Id = JwtBearerDefaults.AuthenticationScheme,
+                            Type = ReferenceType.SecurityScheme
+                        }
+                    });
+
+                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = JwtBearerDefaults.AuthenticationScheme
+                                }
+                            },
+                            new List<string>()
+                        }
+                    });
+
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "DentalSystem.Scheduling", Version = "v1" });
                 });
 
