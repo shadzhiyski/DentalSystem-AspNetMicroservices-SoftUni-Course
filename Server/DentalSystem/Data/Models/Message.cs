@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using Newtonsoft.Json;
 
-    public class Message : Entity
+    public class Message : IEntity
     {
         private string serializedData;
 
