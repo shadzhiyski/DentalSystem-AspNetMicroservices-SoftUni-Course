@@ -87,7 +87,7 @@
                         var dentistRegisteredMessage = new DentistRegisteredMessage
                         {
                             DentalTeamName = Constants.DefaultDentalTeamName,
-                            ReferenceId = dentistUser.Id,
+                            ReferenceId = dentistUser.ReferenceId,
                         };
 
                         await unitOfWork.Save(dentistRegisteredMessage);

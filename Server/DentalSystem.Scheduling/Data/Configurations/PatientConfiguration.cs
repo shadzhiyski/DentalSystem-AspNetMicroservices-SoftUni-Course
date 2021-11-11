@@ -11,11 +11,6 @@ namespace DentalSystem.Scheduling.Data.Configurations
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.ReferenceId).HasValueGenerator<ReferenceIdGenerator>();
-
-            builder.Property(e => e.UserId).IsRequired();
-
-            builder.HasIndex(e => e.UserId).IsUnique();
             builder.HasIndex(e => e.ReferenceId).IsUnique();
         }
     }

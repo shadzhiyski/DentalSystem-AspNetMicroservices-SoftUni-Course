@@ -1,7 +1,10 @@
+
 namespace DentalSystem.Messages.Identity
 {
+    using System;
+
     public class PatientRegisteredMessage
     {
-        public string ReferenceId { get; set; }
+        public Guid ReferenceId { get; set; }
     }
 }

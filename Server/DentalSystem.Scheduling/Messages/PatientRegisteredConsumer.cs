@@ -17,7 +17,7 @@
         {
             _patientService.Add(new Patient
             {
-                UserId = context.Message.ReferenceId,
+                ReferenceId = context.Message.ReferenceId,
             });
 
             await _patientService.Save();

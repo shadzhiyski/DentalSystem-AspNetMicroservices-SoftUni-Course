@@ -48,14 +48,14 @@
                 {
                     message = new PatientRegisteredMessage
                     {
-                        ReferenceId = user.Id
+                        ReferenceId = user.ReferenceId
                     };
                 }
                 else if (Constants.PatientRoleName.Equals(roleName))
                 {
                     message = new DentistRegisteredMessage
                     {
-                        ReferenceId = user.Id
+                        ReferenceId = user.ReferenceId
                     };
                 }
 

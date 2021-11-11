@@ -48,7 +48,7 @@
 
             var dentist = new Dentist
             {
-                UserId = context.Message.ReferenceId,
+                ReferenceId = context.Message.ReferenceId,
                 TeamId = dentalTeam.Id
             };
 
