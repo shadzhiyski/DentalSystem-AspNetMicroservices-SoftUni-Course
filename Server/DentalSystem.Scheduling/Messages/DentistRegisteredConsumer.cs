@@ -27,7 +27,7 @@
         {
             var dentalTeam = await _dentalTeamService.FindByName(context.Message.DentalTeamName);
 
-            var room = await _roomService.Find(dentalTeam?.Id ?? Guid.Empty);
+            var room = await _roomService.Find(dentalTeam?.RoomId ?? Guid.Empty);
             if (room == default)
             {
                 room = new Room() { Name = $"{context.Message.DentalTeamName}_Room" };
