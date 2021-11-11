@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using Newtonsoft.Json;
 
-    public class Message : IEntity
+    public class Message
     {
         private string serializedData;
 
@@ -14,6 +14,8 @@
         private Message()
         {
         }
+
+        public Guid Id { get; set; }
 
         public Type Type { get; private set; }
 

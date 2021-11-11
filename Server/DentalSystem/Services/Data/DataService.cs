@@ -9,7 +9,7 @@
     using Microsoft.EntityFrameworkCore;
 
     public abstract class DataService<TEntity> : IDataService<TEntity>
-        where TEntity : PublicEntity
+        where TEntity : class, IPublicEntity
     {
         protected DataService(IUnitOfWork unitOfWork)
         {

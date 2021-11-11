@@ -3,8 +3,12 @@ namespace DentalSystem.Scheduling.Data.Models
     using System;
     using DentalSystem.Data.Models;
 
-    public class Dentist : PublicEntity
+    public class Dentist : IPublicEntity
     {
+        public Guid Id { get; set; }
+
+        public Guid ReferenceId { get; set; }
+
         public string UserId { get; set; }
 
         public Guid TeamId { get; set; }
