@@ -30,6 +30,7 @@ namespace DentalSystem.Scheduling
                 .AddTransient<IDentistService, DentistService>()
                 .AddTransient<IPatientService, PatientService>()
                 .AddTransient<IRoomService, RoomService>()
+                .AddTransient<ITreatmentService, TreatmentService>()
                 .AddTransient<ITreatmentSessionService, TreatmentSessionService>()
                 .AddMessaging(
                     this.Configuration,
