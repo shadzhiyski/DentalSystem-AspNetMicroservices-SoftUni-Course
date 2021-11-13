@@ -8,7 +8,6 @@ namespace DentalSystem.Scheduling.Services
     using DentalSystem.Scheduling.Data.Models;
     using DentalSystem.Scheduling.Models;
     using DentalSystem.Services.Data;
-    using DentalSystem.Services.Messages;
     using Microsoft.EntityFrameworkCore;
 
     public class TreatmentSessionService : DataService<TreatmentSession>, ITreatmentSessionService
@@ -21,7 +20,7 @@ namespace DentalSystem.Scheduling.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetDentistTreatmentSessions(Guid dentistId, PatientTreatmentSessionsQuery query)
+        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetDentistTreatmentSessions(Guid dentistReferenceId, PatientTreatmentSessionsQuery query)
         {
             var dentists = this.Data.Set<Dentist>();
             var dataQuery = this
@@ -30,9 +29,9 @@ namespace DentalSystem.Scheduling.Services
                     dentists,
                     ts => ts.DentalTeamId,
                     d => d.TeamId,
-                    (ts, d) => new { TreatmentSession = ts, DentistId = d.Id }
+                    (ts, d) => new { TreatmentSession = ts, DentistReferenceId = d.ReferenceId }
                 )
-                .Where(r => r.DentistId == dentistId)
+                .Where(r => r.DentistReferenceId == dentistReferenceId)
                 .Select(r => r.TreatmentSession);
 
             return await this._mapper
@@ -40,11 +39,11 @@ namespace DentalSystem.Scheduling.Services
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetPatientTreatmentSessions(Guid patientId, PatientTreatmentSessionsQuery query)
+        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetPatientTreatmentSessions(Guid patientReferenceId, PatientTreatmentSessionsQuery query)
         {
             var dataQuery = this
                 .All()
-                .Where(r => r.PatientId == patientId);
+                .Where(r => r.Patient.ReferenceId == patientReferenceId);
 
             return await this._mapper
                 .ProjectTo<PatientTreatmentSessionsOutputModel>(dataQuery)
