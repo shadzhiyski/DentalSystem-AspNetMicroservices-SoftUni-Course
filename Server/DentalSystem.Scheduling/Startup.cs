@@ -12,6 +12,8 @@ namespace DentalSystem.Scheduling
     using DentalSystem.Notifications.Messages;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using System.Collections.Generic;
+    using DentalSystem.Identity.Data;
+    using DentalSystem.Services.Data;
 
     public class Startup
     {
@@ -23,6 +25,7 @@ namespace DentalSystem.Scheduling
         public void ConfigureServices(IServiceCollection services)
             => services
                 .AddWebService<SchedulingDbContext>(this.Configuration)
+                .AddTransient<IDataSeeder, TreatmentsDataSeeder>()
                 .AddTransient<IDentalTeamService, DentalTeamService>()
                 .AddTransient<IDentistService, DentistService>()
                 .AddTransient<IPatientService, PatientService>()
