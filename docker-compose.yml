@@ -49,6 +49,29 @@ services:
         depends_on:
             - data
 
+    scheduling:
+        container_name: scheduling
+        image: stoian/dentalsystem-scheduling-service
+        build:
+            context: ./Server
+            dockerfile: ./DentalSystem.Scheduling/Dockerfile
+        ports:
+            - "5002:80"
+        env_file: Server/DentalSystem/Common.env
+        environment:
+            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DentalSystem_SchedulingDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
+            - ConnectionStrings__CronJobsConnection=Server=sqlserver;Database=DentalSystem_SchedulingCronJobDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
+            - MessageQueueSettings__Host=rabbitmq
+            - MessageQueueSettings__UserName=rabbitmquser
+            - MessageQueueSettings__Password=rabbitmqPassword12!
+        restart: on-failure
+        volumes:
+            - data-protection:/root/.aspnet/DataProtection-Keys
+        networks:
+            - dentalsystem-network
+        depends_on:
+            - data
+
     watchdog:
         container_name: watchdog
         image: stoian/dentalsystem-watchdog-service
