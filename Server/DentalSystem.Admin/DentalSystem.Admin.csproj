@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Refit.HttpClientFactory" Version="5.1.67" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DentalSystem\DentalSystem.csproj" />
   </ItemGroup>
 
