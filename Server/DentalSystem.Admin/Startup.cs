@@ -2,11 +2,15 @@
 
 namespace DentalSystem.Admin
 {
+    using System.Reflection;
+    using DentalSystem.Admin.Infrastructure;
     using DentalSystem.Admin.Services;
     using DentalSystem.Admin.Services.Identity;
     using DentalSystem.Infrastructure;
+    using DentalSystem.Services.Identity;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -25,7 +29,16 @@ namespace DentalSystem.Admin
                 .Get<ServiceEndpoints>(config => config.BindNonPublicProperties = true);
 
             services
-                .AddControllersWithViews();
+                .AddAutoMapperProfile(Assembly.GetExecutingAssembly())
+                .AddTokenAuthentication(this.Configuration)
+                .AddHealth(
+                    this.Configuration,
+                    databaseHealthChecks: false,
+                    messagingHealthChecks: false)
+                .AddScoped<ICurrentTokenService, CurrentTokenService>()
+                .AddTransient<JwtCookieAuthenticationMiddleware>()
+                .AddControllersWithViews(options => options
+                    .Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 
             services
                 .AddRefitClient<IIdentityService>()
