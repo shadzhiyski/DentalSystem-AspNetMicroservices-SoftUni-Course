@@ -1,5 +1,3 @@
-
-
 namespace DentalSystem.Admin
 {
     using System.Reflection;
