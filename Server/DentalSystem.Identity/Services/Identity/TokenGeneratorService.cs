@@ -9,6 +9,7 @@
     using Data.Models;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
+    using static DentalSystem.Infrastructure.InfrastructureConstants;
 
     public class TokenGeneratorService : ITokenGeneratorService
     {
@@ -26,7 +27,7 @@
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.Email),
-                new Claim("ReferenceId", user.ReferenceId.ToString())
+                new Claim(UserReferenceIdLabel, user.ReferenceId.ToString())
             };
 
             if (roles != null)
