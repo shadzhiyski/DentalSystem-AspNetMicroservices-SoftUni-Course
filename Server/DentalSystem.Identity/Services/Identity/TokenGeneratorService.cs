@@ -14,7 +14,7 @@
     {
         private readonly ApplicationSettings applicationSettings;
 
-        public TokenGeneratorService(IOptions<ApplicationSettings> applicationSettings) 
+        public TokenGeneratorService(IOptions<ApplicationSettings> applicationSettings)
             => this.applicationSettings = applicationSettings.Value;
 
         public string GenerateToken(User user, IEnumerable<string> roles = null)
@@ -25,7 +25,8 @@
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.Email)
+                new Claim(ClaimTypes.Name, user.Email),
+                new Claim("ReferenceId", user.ReferenceId.ToString())
             };
 
             if (roles != null)
