@@ -20,7 +20,7 @@ namespace DentalSystem.Scheduling.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetDentistTreatmentSessions(Guid dentistReferenceId, PatientTreatmentSessionsQuery query)
+        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetDentistTreatmentSessions(Guid dentistReferenceId, TreatmentSessionsQuery query)
         {
             var dentists = this.Data.Set<Dentist>();
             var dataQuery = this
@@ -39,7 +39,7 @@ namespace DentalSystem.Scheduling.Services
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetPatientTreatmentSessions(Guid patientReferenceId, PatientTreatmentSessionsQuery query)
+        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetPatientTreatmentSessions(Guid patientReferenceId, TreatmentSessionsQuery query)
         {
             var dataQuery = this
                 .All()
@@ -47,6 +47,15 @@ namespace DentalSystem.Scheduling.Services
 
             return await this._mapper
                 .ProjectTo<PatientTreatmentSessionsOutputModel>(dataQuery)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TreatmentSessionViewOutputModel>> GetAllTreatmentSessions(TreatmentSessionsQuery query)
+        {
+            var dataQuery = this.All();
+
+            return await this._mapper
+                .ProjectTo<TreatmentSessionViewOutputModel>(dataQuery)
                 .ToListAsync();
         }
     }

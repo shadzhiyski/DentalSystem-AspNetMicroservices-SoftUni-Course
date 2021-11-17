@@ -18,6 +18,7 @@
         private readonly ITreatmentSessionService _treatmentSessions;
         private readonly IDentalTeamService _dentalTeams;
         private readonly IPatientService _patients;
+        private readonly ICurrentUserService _currentUser;
 
         public TreatmentSessionController(
             ITreatmentService treatmentService,
@@ -30,6 +31,7 @@
             _treatmentSessions = treatmentSessions;
             _dentalTeams = dentalTeams;
             _patients = patients;
+            _currentUser = currentUser;
         }
 
         [HttpPost("/treatmentSession/request")]
@@ -60,10 +62,19 @@
         [HttpGet("/treatmentSession/patient")]
         [AuthorizePatient]
         public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> Patient(
-            Guid patientId,
-            [FromQuery] PatientTreatmentSessionsQuery query)
+            [FromQuery] TreatmentSessionsQuery query)
         {
-            var result = await _treatmentSessions.GetPatientTreatmentSessions(patientId, query);
+            var result = await _treatmentSessions.GetPatientTreatmentSessions(_currentUser.ReferenceId, query);
+
+            return result;
+        }
+
+        [HttpGet("/treatmentSession/all")]
+        [AuthorizeAdministrator]
+        public async Task<IEnumerable<TreatmentSessionViewOutputModel>> All(
+            [FromQuery] TreatmentSessionsQuery query)
+        {
+            var result = await _treatmentSessions.GetAllTreatmentSessions(query);
 
             return result;
         }

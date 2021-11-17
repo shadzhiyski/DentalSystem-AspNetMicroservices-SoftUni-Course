@@ -10,9 +10,11 @@ namespace DentalSystem.Scheduling.Services
     public interface ITreatmentSessionService : IDataService<TreatmentSession>
     {
         Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetPatientTreatmentSessions(
-            Guid patientReferenceId, PatientTreatmentSessionsQuery query);
+            Guid patientReferenceId, TreatmentSessionsQuery query);
 
         Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetDentistTreatmentSessions(
-            Guid dentistReferenceId, PatientTreatmentSessionsQuery query);
+            Guid dentistReferenceId, TreatmentSessionsQuery query);
+
+        Task<IEnumerable<TreatmentSessionViewOutputModel>> GetAllTreatmentSessions(TreatmentSessionsQuery query);
     }
 }
