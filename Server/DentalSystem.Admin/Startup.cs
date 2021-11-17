@@ -51,12 +51,10 @@ namespace DentalSystem.Admin
             .UseHttpsRedirection()
             .UseStaticFiles()
             .UseRouting()
+            .UseJwtCookieAuthentication()
             .UseAuthorization()
-            .UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            .UseEndpoints(endpoints => endpoints
+                .MapHealthChecks()
+                .MapDefaultControllerRoute());
     }
 }
