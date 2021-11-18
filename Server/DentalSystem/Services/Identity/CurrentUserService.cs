@@ -5,6 +5,8 @@
     using Infrastructure;
     using Microsoft.AspNetCore.Http;
 
+    using static DentalSystem.Infrastructure.InfrastructureConstants;
+
     public class CurrentUserService : ICurrentUserService
     {
         private readonly ClaimsPrincipal user;
@@ -19,9 +21,12 @@
             }
 
             this.UserId = this.user.FindFirstValue(ClaimTypes.NameIdentifier);
+            ReferenceId = Guid.Parse(this.user.FindFirstValue(UserReferenceIdLabel));
         }
 
         public string UserId { get; }
+
+        public Guid ReferenceId { get; }
 
         public bool IsAdministrator => this.user.IsAdministrator();
     }
