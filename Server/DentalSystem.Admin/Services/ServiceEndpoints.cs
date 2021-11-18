@@ -7,6 +7,8 @@
     {
         public string Identity { get; private set; }
 
+        public string Scheduling { get; private set; }
+
         public string this[string service]
             => this.GetType()
                 .GetProperties()

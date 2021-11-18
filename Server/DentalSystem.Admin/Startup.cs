@@ -4,6 +4,7 @@ namespace DentalSystem.Admin
     using DentalSystem.Admin.Infrastructure;
     using DentalSystem.Admin.Services;
     using DentalSystem.Admin.Services.Identity;
+    using DentalSystem.Admin.Services.Scheduling;
     using DentalSystem.Infrastructure;
     using DentalSystem.Services.Identity;
     using Microsoft.AspNetCore.Builder;
@@ -41,6 +42,10 @@ namespace DentalSystem.Admin
             services
                 .AddRefitClient<IIdentityService>()
                 .WithConfiguration(serviceEndpoints.Identity);
+
+            services
+                .AddRefitClient<ITreatmentSessionService>()
+                .WithConfiguration(serviceEndpoints.Scheduling);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) =>
