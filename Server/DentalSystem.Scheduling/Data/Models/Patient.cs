@@ -8,5 +8,7 @@ namespace DentalSystem.Scheduling.Data.Models
         public Guid Id { get; set; }
 
         public Guid ReferenceId { get; set; }
+
+        public string Email { get; set; }
     }
 }

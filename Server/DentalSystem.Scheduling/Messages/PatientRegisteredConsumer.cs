@@ -18,6 +18,7 @@
             _patientService.Add(new Patient
             {
                 ReferenceId = context.Message.ReferenceId,
+                Email = context.Message.Email
             });
 
             await _patientService.Save();

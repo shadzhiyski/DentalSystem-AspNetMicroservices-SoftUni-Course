@@ -9,6 +9,8 @@ namespace DentalSystem.Scheduling.Data.Models
 
         public Guid ReferenceId { get; set; }
 
+        public string Email { get; set; }
+
         public Guid TeamId { get; set; }
 
         public virtual DentalTeam Team { get; set; }

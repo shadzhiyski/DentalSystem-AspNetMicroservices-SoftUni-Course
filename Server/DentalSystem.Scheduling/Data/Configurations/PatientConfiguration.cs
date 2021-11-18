@@ -12,6 +12,8 @@ namespace DentalSystem.Scheduling.Data.Configurations
             builder.HasKey(e => e.Id);
 
             builder.HasIndex(e => e.ReferenceId).IsUnique();
+
+            builder.Property(e => e.Email).HasMaxLength(256);
         }
     }
 }

@@ -7,5 +7,7 @@ namespace DentalSystem.Messages.Identity
         public string DentalTeamName { get; set; }
 
         public Guid ReferenceId { get; set; }
+
+        public string Email { get; set; }
     }
 }
