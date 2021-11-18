@@ -7,7 +7,7 @@ namespace DentalSystem.Scheduling.Models
 
     public record TreatmentSessionViewOutputModel : IMapFrom<TreatmentSession>
     {
-        public string PatientName { get; set; }
+        public string PatientEmail { get; set; }
 
         public string DentalTeamName { get; set; }
 
@@ -21,7 +21,7 @@ namespace DentalSystem.Scheduling.Models
 
         public void Mapping(Profile mapper) => mapper
             .CreateMap<TreatmentSession, TreatmentSessionViewOutputModel>()
-            .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient.ReferenceId.ToString()))
+            .ForMember(dest => dest.PatientEmail, opt => opt.MapFrom(src => src.Patient.Email))
             .ForMember(dest => dest.DentalTeamName, opt => opt.MapFrom(src => src.DentalTeam.Name))
             .ForMember(dest => dest.TreatmentName, opt => opt.MapFrom(src => src.Treatment.Name))
             .ForMember(dest => dest.Start, opt => opt.MapFrom(src => src.Period.Start))
