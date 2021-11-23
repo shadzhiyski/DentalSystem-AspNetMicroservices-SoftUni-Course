@@ -1,4 +1,4 @@
-import axios from "../../common/plugins/axios";
+import webService from "../../common/plugins/auth-web-service";
 
 const state = {
   username: localStorage.getItem('username') || null,
@@ -33,14 +33,16 @@ const getters = {
 const actions = {
 
   async logIn({commit}, userCredentials) {
-    var response = await axios.post("Identity/Login", userCredentials);
+    userCredentials.email = userCredentials.username;
+    var response = await webService.post("Identity/Login", userCredentials);
 
     await commit("setUser", userCredentials.username);
     await commit("setAuthToken", response.token);
   },
 
   async register({commit}, userInputData) {
-    var response = await axios.post("Identity/Register", userInputData);
+    userInputData.email = userInputData.username;
+    var response = await webService.post("Identity/Register", userInputData);
 
     await commit("setUser", userInputData.username);
     await commit("setAuthToken", response.token);
