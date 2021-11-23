@@ -1,41 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+    <Appbar :navigationItems="navigationItems"/>
 
     <v-main>
       <router-view/>
@@ -44,10 +9,28 @@
 </template>
 
 <script>
+import Appbar from './common/components/Appbar';
+import { mapGetters } from "vuex";
 
 export default {
   name: 'App',
-
+  computed: {
+    navigationItems() {
+      let routes = this.$router.options.routes;
+      if (this.isAuthenticated()) {
+        routes = routes.filter(r =>  r.showOn == 'Authorized' || r.showOn == 'Always');
+      } else {
+        routes = routes.filter(r =>  r.showOn == 'NonAuthorized' || r.showOn == 'Always');
+      }
+      return routes;
+    }
+  },
+  components: {
+    Appbar
+  },
+  methods: {
+    ...mapGetters(['isAuthenticated'])
+  },
   data: () => ({
     //
   }),
