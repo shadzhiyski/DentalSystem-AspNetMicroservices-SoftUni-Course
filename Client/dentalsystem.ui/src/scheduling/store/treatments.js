@@ -1,4 +1,4 @@
-import schedulingWebService from "../../common/plugins/scheduling-web-service";
+import schedulingWebService from "../../scheduling/plugins/scheduling-web-service";
 
 const state = {
   treatments: []
