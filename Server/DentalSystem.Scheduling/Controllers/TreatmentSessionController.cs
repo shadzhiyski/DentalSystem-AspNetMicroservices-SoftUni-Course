@@ -69,6 +69,16 @@
             return result;
         }
 
+        [HttpGet("/treatmentSession/dentalTeam")]
+        [AuthorizeDentist]
+        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> DentalTeam(
+            [FromQuery] TreatmentSessionsQuery query)
+        {
+            var result = await _treatmentSessions.GetDentistTreatmentSessions(_currentUser.ReferenceId, query);
+
+            return result;
+        }
+
         [HttpGet("/treatmentSession/all")]
         [AuthorizeAdministrator]
         public async Task<IEnumerable<TreatmentSessionViewOutputModel>> All(
