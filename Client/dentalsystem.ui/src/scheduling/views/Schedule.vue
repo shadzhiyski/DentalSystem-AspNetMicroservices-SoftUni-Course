@@ -239,7 +239,7 @@ export default {
         .filter(filter)
         .map(ts => {
             return {
-            referenceId: ts.ReferenceId,
+            referenceId: ts.referenceId,
             patientReferenceId: ts.patientReferenceId,
             name: 'Treatment: ' + ts.treatmentReferenceId,// TODO: add ts.Treatment.Name,
             start: new Date(ts.start),
@@ -252,7 +252,7 @@ export default {
     async getEvents({ start, end }) {
       const min = `${start.date}T00:00:00`
       const max = `${end.date}T23:59:59`
-      this.getFilteredEvents(ts => ts.Start >= min && ts.End <= max);
+      this.getFilteredEvents(ts => ts.start >= min && ts.end <= max);
     },
     getEventColor (event) {
       return event.color
