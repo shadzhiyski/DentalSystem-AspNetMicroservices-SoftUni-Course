@@ -1,4 +1,4 @@
-import axios from "../../common/plugins/axios";
+import schedulingWebService from "../../common/plugins/scheduling-web-service";
 
 const state = {
   treatments: []
@@ -10,7 +10,7 @@ const getters = {
 
 const actions = {
   async getTreatments({commit}) {
-    let response = await axios.get("Treatment/all");
+    let response = await schedulingWebService.get("Treatment/all");
     await commit("setTreatments", response.data);
   },
 };
