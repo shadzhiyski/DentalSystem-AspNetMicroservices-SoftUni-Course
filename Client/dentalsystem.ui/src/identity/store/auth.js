@@ -1,4 +1,4 @@
-import webService from "../../common/plugins/auth-web-service";
+import webService from "../plugins/auth-web-service";
 
 const state = {
   username: localStorage.getItem('username') || null,

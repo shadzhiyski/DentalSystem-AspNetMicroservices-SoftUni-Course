@@ -1,6 +1,6 @@
 "use strict";
 
-import { AxiosWebServiceBuilder } from './axios-web-service-builder'
+import { AxiosWebServiceBuilder } from '../../common/plugins/axios-web-service-builder'
 
 let config = {
   baseURL: 'https://localhost:4001/',
