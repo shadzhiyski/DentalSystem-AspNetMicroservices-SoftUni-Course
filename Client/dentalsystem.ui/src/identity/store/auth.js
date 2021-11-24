@@ -16,7 +16,7 @@ const getters = {
 
     var resultData = {
       username: rawData['unique_name'],
-      role: rawData['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
+      role: rawData['role'],
 
     };
 
