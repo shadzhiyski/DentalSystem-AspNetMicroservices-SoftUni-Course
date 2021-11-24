@@ -37,7 +37,7 @@ const actions = {
     var response = await webService.post("Identity/Login", userCredentials);
 
     await commit("setUser", userCredentials.username);
-    await commit("setAuthToken", response.token);
+    await commit("setAuthToken", response.data.token);
   },
 
   async register({commit}, userInputData) {
@@ -45,7 +45,7 @@ const actions = {
     var response = await webService.post("Identity/Register", userInputData);
 
     await commit("setUser", userInputData.username);
-    await commit("setAuthToken", response.token);
+    await commit("setAuthToken", response.data.token);
   },
 
   async logOut({ commit }) {
