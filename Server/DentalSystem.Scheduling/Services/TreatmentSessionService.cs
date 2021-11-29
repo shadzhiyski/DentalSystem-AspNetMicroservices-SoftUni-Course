@@ -7,6 +7,7 @@ namespace DentalSystem.Scheduling.Services
     using AutoMapper;
     using DentalSystem.Scheduling.Data.Models;
     using DentalSystem.Scheduling.Models;
+    using DentalSystem.Services;
     using DentalSystem.Services.Data;
     using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,20 @@ namespace DentalSystem.Scheduling.Services
             : base(unitOfWork)
         {
             _mapper = mapper;
+        }
+
+        public async Task<TreatmentSession> Find(Guid referenceId) =>
+            await this
+                .All()
+                .FirstOrDefaultAsync(ts => ts.ReferenceId == referenceId);
+
+        public async Task<PatientTreatmentSessionsOutputModel> Get(Guid referenceId)
+        {
+            var treatmentSession = await this
+                .All()
+                .FirstOrDefaultAsync(ts => ts.ReferenceId == referenceId);
+            return this._mapper
+                .Map<PatientTreatmentSessionsOutputModel>(treatmentSession);
         }
 
         public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetDentistTreatmentSessions(Guid dentistReferenceId, TreatmentSessionsQuery query)

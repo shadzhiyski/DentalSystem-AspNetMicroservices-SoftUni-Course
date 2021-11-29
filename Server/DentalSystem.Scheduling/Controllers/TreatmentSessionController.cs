@@ -11,6 +11,7 @@
     using DentalSystem.Scheduling.Data.Models;
     using DentalSystem.Scheduling.Data.ValueObjects;
     using DentalSystem.Infrastructure;
+    using Microsoft.AspNetCore.Authorization;
 
     public class TreatmentSessionController : ApiController
     {
@@ -59,6 +60,16 @@
             return Ok();
         }
 
+        [HttpGet("/treatmentSession/:referenceId")]
+        [Authorize]
+        public async Task<PatientTreatmentSessionsOutputModel> Get(
+            [FromQuery] Guid referenceId)
+        {
+            var result = await _treatmentSessions.Get(referenceId);
+
+            return result;
+        }
+
         [HttpGet("/treatmentSession/patient")]
         [AuthorizePatient]
         public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> Patient(
@@ -77,6 +88,42 @@
             var result = await _treatmentSessions.GetDentistTreatmentSessions(_currentUser.ReferenceId, query);
 
             return result;
+        }
+
+        [HttpPost("/treatmentSession/accept/:referenceId")]
+        [AuthorizeDentist]
+        public async Task<IActionResult> Accept(
+            [FromQuery] Guid referenceId)
+        {
+            var treatmentSession = await _treatmentSessions.Find(referenceId);
+            if (treatmentSession == default)
+            {
+                return BadRequest("Treatment session does not exist.");
+            }
+
+            treatmentSession.Status = TreatmentSessionStatus.Accepted;
+
+            await _treatmentSessions.Save();
+
+            return Ok();
+        }
+
+        [HttpPost("/treatmentSession/reject/:referenceId")]
+        [AuthorizeDentist]
+        public async Task<IActionResult> Reject(
+            [FromQuery] Guid referenceId)
+        {
+            var treatmentSession = await _treatmentSessions.Find(referenceId);
+            if (treatmentSession == default)
+            {
+                return BadRequest("Treatment session does not exist.");
+            }
+
+            treatmentSession.Status = TreatmentSessionStatus.Rejected;
+
+            await _treatmentSessions.Save();
+
+            return Ok();
         }
 
         [HttpGet("/treatmentSession/all")]
