@@ -21,7 +21,7 @@
             }
 
             this.UserId = this.user.FindFirstValue(ClaimTypes.NameIdentifier);
-            ReferenceId = Guid.Parse(this.user.FindFirstValue(UserReferenceIdLabel));
+            ReferenceId = Guid.Parse(this.user.FindFirstValue(UserReferenceIdLabel) ?? Guid.Empty.ToString());
         }
 
         public string UserId { get; }
