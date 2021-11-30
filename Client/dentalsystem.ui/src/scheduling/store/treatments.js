@@ -10,7 +10,7 @@ const getters = {
 
 const actions = {
   async getTreatments({commit}) {
-    let response = await schedulingWebService.get("Treatment/all");
+    let response = await schedulingWebService.get("treatment/all");
     await commit("setTreatments", response.data);
   },
 };

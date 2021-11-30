@@ -16,7 +16,7 @@ namespace DentalSystem.Scheduling.Controllers
             _treatmentService = treatmentService;
         }
 
-        [HttpGet("all")]
+        [HttpGet("/treatment/all")]
         public async Task<IEnumerable<TreatmentOutputModel>> All() => await _treatmentService.GetAll();
     }
 }
