@@ -12,14 +12,7 @@ const getters = {
 
 const actions = {
   async getTreatmentSession({commit}, referenceId) {
-    let response = await schedulingWebService.get(
-      'treatmentSession',
-      {
-        params: {
-          referenceId: referenceId
-        }
-      }
-    );
+    let response = await schedulingWebService.get('treatmentSession/' + referenceId);
 
     const responseData = response.data.value[0];
     const treatmentSessionData = {
