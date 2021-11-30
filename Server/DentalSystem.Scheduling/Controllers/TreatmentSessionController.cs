@@ -37,8 +37,7 @@
 
         [HttpPost("/treatmentSession/request")]
         [AuthorizePatient]
-        public async Task<IActionResult> MakeRequest(
-            [FromQuery] RequestTreatmentSessionInput input)
+        public async Task<IActionResult> MakeRequest(RequestTreatmentSessionInput input)
         {
             var dentalTeam = await _dentalTeams.FindByReferenceId(input.DentalTeamReferenceId.Value);
             var patient = await _patients.FindByReferenceId(input.PatientReferenceId.Value);
