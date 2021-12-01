@@ -59,7 +59,7 @@
             return Ok();
         }
 
-        [HttpGet("/treatmentSession/:referenceId")]
+        [HttpGet("/treatmentSession")]
         [Authorize]
         public async Task<TreatmentSessionsOutputModel> Get(
             [FromQuery] Guid referenceId)
@@ -89,7 +89,7 @@
             return result;
         }
 
-        [HttpPost("/treatmentSession/accept/:referenceId")]
+        [HttpPost("/treatmentSession/accept")]
         [AuthorizeDentist]
         public async Task<IActionResult> Accept(
             [FromQuery] Guid referenceId)
@@ -107,7 +107,7 @@
             return Ok();
         }
 
-        [HttpPost("/treatmentSession/reject/:referenceId")]
+        [HttpPost("/treatmentSession/reject")]
         [AuthorizeDentist]
         public async Task<IActionResult> Reject(
             [FromQuery] Guid referenceId)
