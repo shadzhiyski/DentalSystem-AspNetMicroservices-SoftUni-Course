@@ -11,13 +11,13 @@ namespace DentalSystem.Scheduling.Services
     {
         Task<TreatmentSession> Find(Guid referenceId);
 
-        Task<PatientTreatmentSessionsOutputModel> Get(
+        Task<TreatmentSessionsOutputModel> Get(
             Guid referenceId);
 
-        Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetPatientTreatmentSessions(
+        Task<IEnumerable<TreatmentSessionsOutputModel>> GetPatientTreatmentSessions(
             Guid patientReferenceId, TreatmentSessionsQuery query);
 
-        Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetDentistTreatmentSessions(
+        Task<IEnumerable<TreatmentSessionsOutputModel>> GetDentistTreatmentSessions(
             Guid dentistReferenceId, TreatmentSessionsQuery query);
 
         Task<IEnumerable<TreatmentSessionViewOutputModel>> GetAllTreatmentSessions(TreatmentSessionsQuery query);

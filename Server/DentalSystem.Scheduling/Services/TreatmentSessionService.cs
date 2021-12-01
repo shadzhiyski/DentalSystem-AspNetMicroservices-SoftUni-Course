@@ -26,16 +26,16 @@ namespace DentalSystem.Scheduling.Services
                 .All()
                 .FirstOrDefaultAsync(ts => ts.ReferenceId == referenceId);
 
-        public async Task<PatientTreatmentSessionsOutputModel> Get(Guid referenceId)
+        public async Task<TreatmentSessionsOutputModel> Get(Guid referenceId)
         {
             var treatmentSession = await this
                 .All()
                 .FirstOrDefaultAsync(ts => ts.ReferenceId == referenceId);
             return this._mapper
-                .Map<PatientTreatmentSessionsOutputModel>(treatmentSession);
+                .Map<TreatmentSessionsOutputModel>(treatmentSession);
         }
 
-        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetDentistTreatmentSessions(Guid dentistReferenceId, TreatmentSessionsQuery query)
+        public async Task<IEnumerable<TreatmentSessionsOutputModel>> GetDentistTreatmentSessions(Guid dentistReferenceId, TreatmentSessionsQuery query)
         {
             var dentists = this.Data.Set<Dentist>();
             var dataQuery = this
@@ -50,18 +50,18 @@ namespace DentalSystem.Scheduling.Services
                 .Select(r => r.TreatmentSession);
 
             return await this._mapper
-                .ProjectTo<PatientTreatmentSessionsOutputModel>(dataQuery)
+                .ProjectTo<TreatmentSessionsOutputModel>(dataQuery)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> GetPatientTreatmentSessions(Guid patientReferenceId, TreatmentSessionsQuery query)
+        public async Task<IEnumerable<TreatmentSessionsOutputModel>> GetPatientTreatmentSessions(Guid patientReferenceId, TreatmentSessionsQuery query)
         {
             var dataQuery = this
                 .All()
                 .Where(r => r.Patient.ReferenceId == patientReferenceId);
 
             return await this._mapper
-                .ProjectTo<PatientTreatmentSessionsOutputModel>(dataQuery)
+                .ProjectTo<TreatmentSessionsOutputModel>(dataQuery)
                 .ToListAsync();
         }
 

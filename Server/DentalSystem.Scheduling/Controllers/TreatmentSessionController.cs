@@ -61,7 +61,7 @@
 
         [HttpGet("/treatmentSession/:referenceId")]
         [Authorize]
-        public async Task<PatientTreatmentSessionsOutputModel> Get(
+        public async Task<TreatmentSessionsOutputModel> Get(
             [FromQuery] Guid referenceId)
         {
             var result = await _treatmentSessions.Get(referenceId);
@@ -71,7 +71,7 @@
 
         [HttpGet("/treatmentSession/patient")]
         [AuthorizePatient]
-        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> Patient(
+        public async Task<IEnumerable<TreatmentSessionsOutputModel>> Patient(
             [FromQuery] TreatmentSessionsQuery query)
         {
             var result = await _treatmentSessions.GetPatientTreatmentSessions(_currentUser.ReferenceId, query);
@@ -81,7 +81,7 @@
 
         [HttpGet("/treatmentSession/dentalTeam")]
         [AuthorizeDentist]
-        public async Task<IEnumerable<PatientTreatmentSessionsOutputModel>> DentalTeam(
+        public async Task<IEnumerable<TreatmentSessionsOutputModel>> DentalTeam(
             [FromQuery] TreatmentSessionsQuery query)
         {
             var result = await _treatmentSessions.GetDentistTreatmentSessions(_currentUser.ReferenceId, query);

@@ -5,7 +5,7 @@ namespace DentalSystem.Scheduling.Models
     using DentalSystem.Models;
     using DentalSystem.Scheduling.Data.Models;
 
-    public record PatientTreatmentSessionsOutputModel : IMapFrom<TreatmentSession>
+    public record TreatmentSessionsOutputModel : IMapFrom<TreatmentSession>
     {
         public Guid PatientReferenceId { get; set; }
 
@@ -20,7 +20,7 @@ namespace DentalSystem.Scheduling.Models
         public string Status { get; set; }
 
         public void Mapping(Profile mapper) => mapper
-            .CreateMap<TreatmentSession, PatientTreatmentSessionsOutputModel>()
+            .CreateMap<TreatmentSession, TreatmentSessionsOutputModel>()
             .ForMember(dest => dest.PatientReferenceId, opt => opt.MapFrom(src => src.Patient.ReferenceId))
             .ForMember(dest => dest.DentalTeamReferenceId, opt => opt.MapFrom(src => src.DentalTeam.ReferenceId))
             .ForMember(dest => dest.TreatmentReferenceId, opt => opt.MapFrom(src => src.Treatment.ReferenceId))
