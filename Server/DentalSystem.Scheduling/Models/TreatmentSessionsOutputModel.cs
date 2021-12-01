@@ -7,6 +7,8 @@ namespace DentalSystem.Scheduling.Models
 
     public record TreatmentSessionsOutputModel : IMapFrom<TreatmentSession>
     {
+        public Guid ReferenceId { get; set; }
+
         public Guid PatientReferenceId { get; set; }
 
         public Guid DentalTeamReferenceId { get; set; }
