@@ -33,6 +33,15 @@ const actions = {
     await schedulingWebService.put('treatmentSession',treatmentSessionData);
     await commit("setTreatmentSession", treatmentSessionData);
   },
+  async acceptTreatmentSession({commit}, treatmentSessionData) {
+    console.log(treatmentSessionData.referenceId);
+    await schedulingWebService.post('treatmentSession/accept', null, { params: { referenceId: treatmentSessionData.referenceId } });
+    await commit("setTreatmentSession", treatmentSessionData);
+  },
+  async rejectTreatmentSession({commit}, treatmentSessionData) {
+    await schedulingWebService.post('treatmentSession/reject', null, { params: { referenceId: treatmentSessionData.referenceId } });
+    await commit("setTreatmentSession", treatmentSessionData);
+  },
   async createTreatmentSession({commit}, treatmentSessionData) {
     await schedulingWebService.post('treatmentSession/request',treatmentSessionData);
     await commit("setTreatmentSession", treatmentSessionData);
