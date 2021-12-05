@@ -5,7 +5,7 @@ import router from '../router'
 import store from '../store'
 
 // Full config:  https://github.com/axios/axios#request-config
-axios.defaults.baseURL = 'https://localhost:4002/';
+axios.defaults.baseURL = process.env.VUE_APP_IDENTITY_BASE_URL;
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
