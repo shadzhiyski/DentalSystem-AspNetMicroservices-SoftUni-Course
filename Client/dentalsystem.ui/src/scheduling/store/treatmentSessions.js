@@ -34,7 +34,6 @@ const actions = {
     await commit("setTreatmentSession", treatmentSessionData);
   },
   async acceptTreatmentSession({commit}, treatmentSessionData) {
-    console.log(treatmentSessionData.referenceId);
     await schedulingWebService.post('treatmentSession/accept', null, { params: { referenceId: treatmentSessionData.referenceId } });
     await commit("setTreatmentSession", treatmentSessionData);
   },

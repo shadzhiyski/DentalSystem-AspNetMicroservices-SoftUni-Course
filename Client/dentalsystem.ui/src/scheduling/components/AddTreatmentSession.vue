@@ -121,7 +121,7 @@ export default {
       let endDate = new Date(this.treatmentSessionData.start);
       endDate.setMinutes(endDate.getMinutes() + this.duration);
       this.treatmentSessionData.end = endDate.toISOString();
-      console.log(this.treatmentSessionData);
+
       await this.createTreatmentSession(this.treatmentSessionData);
       this.toggleAddForm(true);
     }
