@@ -41,6 +41,9 @@ services:
         environment:
             - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DentalSystem_IdentityDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
             - IdentitySettings__AdminPassword=adminpass12!
+            - MessageQueueSettings__Host=rabbitmq
+            - MessageQueueSettings__UserName=rabbitmquser
+            - MessageQueueSettings__Password=rabbitmqPassword12!
         restart: on-failure
         volumes:
             - data-protection:/root/.aspnet/DataProtection-Keys
@@ -83,6 +86,8 @@ services:
         environment:
             - HealthChecks-UI__HealthChecks__0__Name=Identity
             - HealthChecks-UI__HealthChecks__0__Uri=http://identity/health
+            - HealthChecks-UI__HealthChecks__1__Name=Scheduling
+            - HealthChecks-UI__HealthChecks__1__Uri=http://scheduling/health
         restart: on-failure
         networks:
             - dentalsystem-network
