@@ -26,9 +26,7 @@ namespace DentalSystem.Identity
                 .Configure<IdentitySettings>(
                     this.Configuration.GetSection(nameof(IdentitySettings)),
                     config => config.BindNonPublicProperties = true)
-                .AddWebService<IdentityDbContext>(
-                    this.Configuration,
-                    messagingHealthChecks: false)
+                .AddWebService<IdentityDbContext>(this.Configuration)
                 .AddUserStorage()
                 .AddTransient<IDataSeeder, IdentityDataSeeder>()
                 .AddTransient<IIdentityService, IdentityService>()
@@ -37,8 +35,7 @@ namespace DentalSystem.Identity
                 .AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "DentalSystem.Identity", Version = "v1" });
-                })
-                .AddControllers();
+                });
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             => (env.IsDevelopment()
