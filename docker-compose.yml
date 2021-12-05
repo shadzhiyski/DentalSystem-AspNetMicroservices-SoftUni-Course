@@ -55,6 +55,7 @@ services:
         env_file: Server/DentalSystem/Common.env
         environment:
             - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DentalSystem_IdentityDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
+            - ConnectionStrings__CronJobsConnection=Server=sqlserver;Database=DentalSystem_IdentityCronJobDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
             - IdentitySettings__AdminPassword=adminpass12!
             - MessageQueueSettings__Host=rabbitmq
             - MessageQueueSettings__UserName=rabbitmquser
