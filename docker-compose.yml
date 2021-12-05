@@ -2,6 +2,21 @@ version: "3.8"
 
 services:
 
+    client:
+        container_name: client
+        image: stoyan/dentalsystem-user-client
+        build:
+            context: ./Client/dentalsystem.ui
+            dockerfile: ./Dockerfile
+            args:
+                configuration: local
+        ports:
+            - "8080:8080"
+        restart: on-failure
+        depends_on:
+            - identity
+            - scheduling
+
     data:
         container_name: sqlserver
         image: mcr.microsoft.com/mssql/server:2019-latest
