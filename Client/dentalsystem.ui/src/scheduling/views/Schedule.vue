@@ -110,7 +110,6 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import AddTreatmentSession from '../components/AddTreatmentSession'
-import EditTreatmentSession from '../components/EditTreatmentSession'
 import ResolveTreatmentSession from '../components/ResolveTreatmentSession'
 
 export default {
@@ -144,7 +143,6 @@ export default {
   }),
   components: {
     AddTreatmentSession,
-    EditTreatmentSession,
     ResolveTreatmentSession
   },
   methods: {
