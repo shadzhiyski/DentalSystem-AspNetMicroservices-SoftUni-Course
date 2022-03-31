@@ -110,6 +110,20 @@ services:
         depends_on:
             - identity
 
+    gateway:
+        container_name: gateway
+        image: stoian/dentalsystem-gateway
+        build:
+            context: ./Server
+            dockerfile: ./DentalSystem.Gateway/Dockerfile
+        ports:
+            - "8888:8888"
+        networks:
+            - dentalsystem-network
+        depends_on:
+            - identity
+            - scheduling
+
 networks:
     dentalsystem-network:
 
